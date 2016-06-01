@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>graphs</title>
+	<meta charset="UTF8">
+	<style type="text/css">
+button {
+background-color: #68b12f;
+background: linear-gradient(top, #68b12f, #50911e);
+border: 1px solid #509111;
+border-bottom: 1px solid #5b992b;
+border-radius: 3px;
+box-shadow: inset 0 1px 0 0 #9fd574;
+color: white;
+font-weight: bold;
+padding: 12px 20px;
+text-align: center;
+text-shadow: 0 -1px 0 #396715;
+}
+button:hover {
+opacity:.85;
+cursor: pointer;
+}
+button:active {
+border: 1px solid #20911e;
+box-shadow: 0 0 10px 5px #356b0b inset;
+}
+input[type=text], select {
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}</style></head>
+<body style="background-color: #BDBDBD">
+<div align="center"  style="font-style: oblique" >
+	<div>
+    function chart: y = 
+    <input type="text" size="1px"  id="field_1" value="2">
+    * sin (<input type="text" align="center" size="1px" id="field_2" value="3">)    
+    	<select   id="colours" onchange="drawGraph()">
+    		 <option value="#333">Color</option>
+   			 <option value="#ff9900">Orange</option>
+   			 <option value="green">Green</option>
+   			 <option value="blue">Blue</option>
+  		</select>
+    <button onclick="drawGraph()">Draw graph</button>
+	</div><div>
+<canvas id="graph" width="600px" height="600px" style="background-color: #C7BE87; margin:10px"></canvas>
+	</div></div>
+<script >
+    function drawGraph(){
+    var graph = document.getElementById('graph');
+	graph.width = graph.width;//clear graph
+    var g = graph.getContext("2d");
+    var x = graph.width, y = graph.height;
+    var koefBeforeSin = document.getElementById("field_1").value;
+	var koefInSin = document.getElementById("field_2").value;
+ 	var colour = document.getElementById("colours").value;
+       	if (!koefInSin||!koefBeforeSin) {
+       		alert("Input numbers");
+       		return;};
+       	if (koefBeforeSin>=7) {
+       		alert("You have to draw less than 6");
+       		return;};
+		g.moveTo(x/2,0);//y line
+       	for ( i = 0, s = 6; i<=y; i+=50, s--) {
+       		g.lineTo(y/2,i);
+       		if (s>0) g.fillText(s,(y/2)+3,i+7);
+       	 	if (s<0) g.fillText(s,(y/2)+3,i-3);
+       	 }     
+        g.lineWidth = 2;
+    	g.strokeStyle = "black";
+    	g.stroke();
+		g.closePath();
+    	g.beginPath();//x line
+    	g.moveTo(0,y/2);
+    	for ( i = 0, s = -6; i <=x ; i+=50, s++) {
+       		g.lineTo(i,x/2);
+       		g.fillText(s,i+3,(x/2)-5);
+       	 }  
+    	g.lineWidth = 2;
+    	g.strokeStyle = "black";
+    	g.stroke();
+    	g.closePath();
+    	g.beginPath();//graph line
+    		g.moveTo(0,300);
+    		for (var i = 1; ; i+=0.1) {
+    			if (((0+i*48)/koefInSin)>=600 ) break;
+    			g.lineTo((0+i*48)/koefInSin, 300-koefBeforeSin*50*Math.sin(i));
+    		};
+    		g.lineWidth = 3;
+    		g.strokeStyle = colour;
+			g.stroke();
+			g.closePath();
+	}
+</script></body></html>
