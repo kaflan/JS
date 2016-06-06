@@ -2,7 +2,24 @@
 <html>
 <head>
 	<title>	Timer</title>
-
+    <style>
+		span {
+			font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+			font-size: 4em;
+		}
+		.day {
+			color: palevioletred;
+		}
+		.hour {
+			color: blueviolet;
+		}
+		.minutes {
+			color: gold;
+		}
+		.second{
+			color: green;
+		}
+	</style>
 </head>
 <body>
 <div id="clock"></div>
@@ -31,10 +48,10 @@ function initializeClock(id, endtime){
   var clock = document.getElementById(id);
   var timeinterval = setInterval(function(){
    var t = getTimeRemaining(endtime);
-   clock.innerHTML = 'days: ' + t.days + ' ' +
-    'hours: '+ t.hours + ' ' +
-    'minutes: ' + t.minutes + ' ' +
-    'seconds: ' + t.seconds;
+   clock.innerHTML = '<span class="day">' + 'days: ' + t.days + '</span>' +
+    '<span class="hours"> '+ "hours:" + t.hours + '</span>' +
+    '<span class="minutes">'+  'minutes: ' + t.minutes + '</span>' +
+    '<span class="seconds">'+'seconds: ' + t.seconds + '<span>';
    if(t.total<=0){
     clearInterval(timeinterval);
    }
