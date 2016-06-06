@@ -7,24 +7,26 @@ var timer = {
     time: null,
     start: null,
     run: function(hour, min, sec) {
-      if(this.time){
-        this.start = setInterval(function () {
-          console.log('second pass');
-           }, this.time);
+        this.time = (hour * 3600000 || 0) + (sec * 1000 || 0) + (min * 60000 || 0);
+        this.start = setInterval(function() {
+            this.time--;
+            console.log('milisecond');
+        }, 1);
+    },
+    pause: function() {
+      this.stop();
+      this.run();
+      if(this.time < 0){
+        return;
       }
-      var hour = hour * 3600000|| 0;
-      var sec = sec * 1000 || 0;
-      var min = min * 60000 || 0;
-      this.time = hour + sec + min;
-      this.start =  setInterval(function () {
-        console.log('second pass');
-         }, this.time);
     },
-    pause: function(){
-      
+    printTime: function() {
+
     },
-    stop: function () {
-      var stop = function () { clearInterval(this.start); }
+    stop: function() {
+        var stop = function() {
+            clearInterval(this.start);
+        }
         setTimeout(stop.bind(this), 0);
     }
 };
